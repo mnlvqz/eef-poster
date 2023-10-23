@@ -1,23 +1,61 @@
 const CELL_WIDTH = 25;
 const PALETTE = ["#000000", "#FFFFFF"];
 
-let FACTOR;
-
 let pulse;
 let field;
 let wire;
 let title, subtitle;
-let photo;
+let landscapes = [];
 
 function preload() {
-  photo = loadImage("assets/photo-a-layer-a-e2.png");
+  loadJSON("assets/photos-data.json", (data) => {
+    for (let i = 0; i < data.length; i++) {
+      let backWires = [];
+      let frontWires = [];
+
+      for (let j = 0; j < data[i].back.length; j++) {
+        backWires[j] = [];
+
+        backWires[j][0] = createVector(
+          data[i].back[j].start[0],
+          data[i].back[j].start[1]
+        );
+
+        backWires[j][1] = createVector(
+          data[i].back[j].end[0],
+          data[i].back[j].end[1]
+        );
+      }
+
+      for (let j = 0; j < data[i].front.length; j++) {
+        frontWires[j] = [];
+
+        frontWires[j][0] = createVector(
+          data[i].front[j].start[0],
+          data[i].front[j].start[1]
+        );
+
+        frontWires[j][1] = createVector(
+          data[i].front[j].end[0],
+          data[i].front[j].end[1]
+        );
+      }
+
+      landscapes[i] = new Landscape(
+        loadImage(data[i].path),
+        backWires,
+        frontWires,
+        createVector(0.0, 0.0),
+        createVector(0.0, 0.0)
+      );
+    }
+  });
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   imageMode(CENTER);
-  FACTOR;
   pulse = new Pulse(8, 250);
   field = new Field(1.0);
   wire = new Wire(createVector(0, 0), createVector(width, height), 128, 10);
@@ -41,6 +79,9 @@ function draw() {
   background(0.0);
 
   // Updates
+
+  landscapes[0].updateLandscape();
+
   field.updateField();
   wire.updateWire();
 
@@ -55,15 +96,7 @@ function draw() {
   wire.drawWire();
   pulse.drawPulse();
 
-  let imageRatio = max(width / photo.width, height / photo.height);
-
-  image(
-    photo,
-    width * 0.5,
-    height * 0.5,
-    photo.width * imageRatio,
-    photo.height * imageRatio
-  );
+  landscapes[0].drawLandscape();
 
   title.drawTextField();
   subtitle.drawTextField();
