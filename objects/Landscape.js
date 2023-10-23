@@ -16,30 +16,30 @@ class Landscape {
     this.backWires = [];
     this.frontWires = [];
 
-    for (let i = 0; i < this.backWiresCoordinates; i++) {
+    for (let i = 0; i < this.backWiresCoordinates.length; i++) {
       this.backWires[i] = new Wire(
         createVector(
-          this.backWiresCoordinates[0].x,
-          this.backWiresCoordinates[0].y
+          this.backWiresCoordinates[i][0].x,
+          this.backWiresCoordinates[i][0].y
         ),
         createVector(
-          this.backWiresCoordinates[1].x,
-          this.backWiresCoordinates[1].y
+          this.backWiresCoordinates[i][1].x,
+          this.backWiresCoordinates[i][1].y
         ),
         128,
         10
       );
     }
 
-    for (let i = 0; i < this.frontWiresCoordinates; i++) {
+    for (let i = 0; i < this.frontWiresCoordinates.length; i++) {
       this.frontWires[i] = new Wire(
         createVector(
-          this.frontWiresCoordinates[0].x,
-          this.frontWiresCoordinates[0].y
+          this.frontWiresCoordinates[i][0].x,
+          this.frontWiresCoordinates[i][0].y
         ),
         createVector(
-          this.frontWiresCoordinates[1].x,
-          this.frontWiresCoordinates[1].y
+          this.frontWiresCoordinates[i][1].x,
+          this.frontWiresCoordinates[i][1].y
         ),
         128,
         10
