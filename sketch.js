@@ -3,7 +3,6 @@ const PALETTE = ["#000000", "#FFFFFF"];
 
 let pulse;
 let field;
-let wire;
 let title, subtitle;
 let landscapes = [];
 
@@ -43,10 +42,11 @@ function preload() {
 
       landscapes[i] = new Landscape(
         loadImage(data[i].path),
+        createVector(0.0, 0.0),
+        createVector(0.0, 0.0),
         backWires,
         frontWires,
-        createVector(0.0, 0.0),
-        createVector(0.0, 0.0)
+        128
       );
     }
   });
@@ -58,7 +58,6 @@ function setup() {
   imageMode(CENTER);
   pulse = new Pulse(8, 250);
   field = new Field(1.0);
-  wire = new Wire(createVector(0, 0), createVector(width, height), 128, 10);
   title = new TextField(
     createVector(0.05, 0.05),
     "ELECTROMAGNETIC\nEXPERIENCE\nFESTIVAL",
@@ -83,7 +82,6 @@ function draw() {
   landscapes[0].updateLandscape();
 
   field.updateField();
-  wire.updateWire();
 
   pulse.updatePulse();
 
@@ -93,7 +91,6 @@ function draw() {
   // Draws
 
   field.drawField();
-  wire.drawWire();
   pulse.drawPulse();
 
   landscapes[0].drawLandscape();

@@ -1,17 +1,71 @@
 class Landscape {
-  constructor(photo, backWires, frontWires, offsetW, offsetH) {
+  constructor(
+    photo,
+    offsetW,
+    offsetH,
+    backWiresCoordinates,
+    frontWiresCoordinates,
+    wireSegments
+  ) {
     this.photo = photo;
-    this.backWires = backWires;
-    this.frontWires = frontWires;
     this.offsetW = offsetW;
     this.offsetH = offsetH;
+    this.backWiresCoordinates = backWiresCoordinates;
+    this.frontWiresCoordinates = frontWiresCoordinates;
+    this.wireSegments = wireSegments;
+    this.backWires = [];
+    this.frontWires = [];
+
+    for (let i = 0; i < this.backWiresCoordinates; i++) {
+      this.backWires[i] = new Wire(
+        createVector(
+          this.backWiresCoordinates[0].x,
+          this.backWiresCoordinates[0].y
+        ),
+        createVector(
+          this.backWiresCoordinates[1].x,
+          this.backWiresCoordinates[1].y
+        ),
+        128,
+        10
+      );
+    }
+
+    for (let i = 0; i < this.frontWiresCoordinates; i++) {
+      this.frontWires[i] = new Wire(
+        createVector(
+          this.frontWiresCoordinates[0].x,
+          this.frontWiresCoordinates[0].y
+        ),
+        createVector(
+          this.frontWiresCoordinates[1].x,
+          this.frontWiresCoordinates[1].y
+        ),
+        128,
+        10
+      );
+    }
   }
 
   setupLandscape() {}
+
   updateLandscape() {
     this.photoRatio = max(width / this.photo.width, height / this.photo.height);
+
+    for (let b of this.backWires) {
+      b.updateWire();
+    }
+
+    for (let f of this.frontWires) {
+      f.updateWire();
+    }
   }
+
   drawLandscape() {
+    for (let b of this.backWires) {
+      b.drawWire();
+    }
+
     push();
     if (width > height) {
       translate(this.offsetW);
@@ -27,17 +81,8 @@ class Landscape {
     );
     pop();
 
-    /*
-
-  let imageRatio = max(width / photos[0].width, height / photos[0].height);
-
-  image(
-    photos[0],
-    width * 0.5,
-    height * 0.5,
-    photos[0].width * imageRatio,
-    photos[0].height * imageRatio
-  );
-  */
+    for (let f of this.frontWires) {
+      f.drawWire();
+    }
   }
 }
