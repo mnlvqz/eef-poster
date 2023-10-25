@@ -6,6 +6,8 @@ let field;
 let title, subtitle;
 let landscapes = [];
 
+let myShader;
+
 function preload() {
   loadJSON("assets/photos-data.json", (data) => {
     for (let i = 0; i < data.length; i++) {
@@ -50,10 +52,12 @@ function preload() {
       );
     }
   });
+
+  myShader = loadShader("assets/test.vert", "assets/test.frag");
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   frameRate(60);
   imageMode(CENTER);
   pulse = new Pulse(8, 250);
@@ -76,14 +80,13 @@ function setup() {
 }
 
 function draw() {
+  blendMode(BLEND);
   background(0.0);
 
   // Updates
 
   landscapes[0].updateLandscape();
-
   field.updateField();
-
   pulse.updatePulse();
 
   title.updateTextField();
@@ -92,12 +95,23 @@ function draw() {
   // Draws
 
   field.drawField();
+  /*
   pulse.drawPulse();
 
   landscapes[0].drawLandscape();
 
   title.drawTextField();
   subtitle.drawTextField();
+  */
+
+  blendMode(DIFFERENCE);
+  noStroke();
+  fill(255, 0, 0);
+  ellipse(mouseX - 10, mouseY - 10, 100, 100);
+  fill(0, 255, 0);
+  ellipse(mouseX + 10, mouseY - 10, 100, 100);
+  fill(0, 0, 255);
+  ellipse(mouseX, mouseY + 10, 100, 100);
 }
 
 function windowResized() {
