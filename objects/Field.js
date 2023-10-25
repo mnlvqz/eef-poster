@@ -39,6 +39,7 @@ class Field {
   drawCross(motif, size, alpha) {
     let r = size * 0.5;
     push();
+    translate(-width * 0.5, -height * 0.5);
     translate(motif.x, motif.y);
     strokeWeight(1);
     stroke(255, 255, 255);
@@ -49,6 +50,7 @@ class Field {
 
   drawDot(motif, size, alpha) {
     push();
+    translate(-width * 0.5, -height * 0.5);
     translate(motif.x, motif.y);
     noStroke();
     fill(255, 255, 255);
