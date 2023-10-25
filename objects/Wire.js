@@ -19,20 +19,26 @@ class Wire {
       let tension = map(i, 0, this.segments - 1, -HALF_PI, HALF_PI);
       this.vertices[i].y =
         sin(this.ctn) * pow(cos(tension), 2) * this.amplitude;
-      this.ctn += 0.1;
+      this.ctn += 0.2;
     }
   }
 
-  drawWire() {
+  drawWire(photoRatio, photoSize) {
+    let maxRatio = max(photoRatio.x, photoRatio.y);
     push();
-    translate(this.start.x, this.start.y);
+    translate(this.start.x * maxRatio, this.start.y * maxRatio);
+    if (photoRatio.y >= photoRatio.x) {
+      translate((width - photoSize.x * maxRatio) * 0.5, 0);
+    } else {
+      translate(0, (height - photoSize.y * maxRatio) * 0.5);
+    }
     rotate(this.angle);
     noFill();
     stroke(255);
-    strokeWeight(2);
+    strokeWeight(1);
     beginShape();
     for (let v of this.vertices) {
-      curveVertex(v.x, v.y);
+      curveVertex(v.x * maxRatio, v.y * maxRatio);
     }
     endShape();
     pop();

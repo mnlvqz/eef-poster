@@ -27,7 +27,7 @@ class Landscape {
           this.backWiresCoordinates[i][1].y
         ),
         128,
-        10
+        50
       );
     }
 
@@ -42,7 +42,7 @@ class Landscape {
           this.frontWiresCoordinates[i][1].y
         ),
         128,
-        10
+        50
       );
     }
   }
@@ -50,7 +50,10 @@ class Landscape {
   setupLandscape() {}
 
   updateLandscape() {
-    this.photoRatio = max(width / this.photo.width, height / this.photo.height);
+    this.photoRatio = createVector(
+      width / this.photo.width,
+      height / this.photo.height
+    );
 
     for (let b of this.backWires) {
       b.updateWire();
@@ -63,7 +66,10 @@ class Landscape {
 
   drawLandscape() {
     for (let b of this.backWires) {
-      b.drawWire();
+      b.drawWire(
+        this.photoRatio,
+        createVector(this.photo.width, this.photo.height)
+      );
     }
 
     push();
@@ -76,13 +82,16 @@ class Landscape {
       this.photo,
       width * 0.5,
       height * 0.5,
-      this.photo.width * this.photoRatio,
-      this.photo.height * this.photoRatio
+      this.photo.width * max(this.photoRatio.x, this.photoRatio.y),
+      this.photo.height * max(this.photoRatio.x, this.photoRatio.y)
     );
     pop();
 
     for (let f of this.frontWires) {
-      f.drawWire();
+      f.drawWire(
+        this.photoRatio,
+        createVector(this.photo.width, this.photo.height)
+      );
     }
   }
 }

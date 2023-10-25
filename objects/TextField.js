@@ -1,72 +1,64 @@
 class TextField {
-  constructor(positionRatio, content, size, align, margin) {
-    this.positionRatio = positionRatio;
+  constructor(content, coordinate, fontSize, align, margin) {
     this.content = split(content, "\n");
-    this.size = height * 0.03;
+    this.coordinate = coordinate;
+    this.fontSize = fontSize;
     this.align = align;
-    this.margin = height * 0.005;
-    this.coordinate = createVector(
-      width * this.positionRatio.x,
-      height * this.positionRatio.y
-    );
+    this.margin = margin;
     this.textHeight = textAscent() + textDescent();
     this.textWidth = 0.0;
-  }
-
-  resizeTextField() {
-    this.coordinate = createVector(
-      width * this.positionRatio.x,
-      height * this.positionRatio.y
-    );
-
-    this.size = height * 0.03;
-    this.margin = height * 0.005;
+    this.fontSizeFixed = 0.0;
+    this.marginFixed = 0.0;
   }
 
   updateTextField() {
     this.textHeight = textAscent() + textDescent();
-    this.textWidth = 0.0;
+    this.fontSizeFixed = this.fontSize * max(width, height);
+    this.marginFixed = this.margin * max(width, height);
   }
 
   drawTextField() {
     push();
-    textSize(this.size);
+    textSize(this.fontSizeFixed);
     textAlign(this.align);
     switch (this.align) {
       case LEFT:
-        translate(
-          this.coordinate.x + this.margin,
-          this.coordinate.y + textAscent() + this.margin
-        );
+        translate(this.coordinate.x * width, this.coordinate.y * height);
+        translate(this.marginFixed, textAscent());
+
         for (let i = 0; i < this.content.length; i++) {
           this.textWidth = textWidth(this.content[i]);
           fill(255);
           noStroke();
           rect(
-            -this.margin,
+            -this.marginFixed,
             this.textHeight * i - textAscent(),
-            this.textWidth + this.margin * 2.0,
+            this.textWidth + this.marginFixed * 2.0,
             this.textHeight
           );
           fill(0);
           text(this.content[i], 0.0, this.textHeight * i);
         }
+
         break;
       case CENTER:
         break;
       case RIGHT:
+        translate(this.coordinate.x * width, this.coordinate.y * height);
         translate(
-          this.coordinate.x + this.margin,
-          this.coordinate.y + textAscent() + this.margin
+          -this.marginFixed,
+          -textAscent() * (this.content.length - 1) -
+            this.marginFixed * this.content.length
         );
+
         for (let i = 0; i < this.content.length; i++) {
           this.textWidth = textWidth(this.content[i]);
           fill(255);
           noStroke();
           rect(
-            this.margin,
+            this.marginFixed,
             this.textHeight * i - textAscent(),
-            -this.textWidth - this.margin * 2.0,
+            -this.textWidth - this.marginFixed * 2.0,
             this.textHeight
           );
           fill(0);

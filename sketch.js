@@ -59,18 +59,19 @@ function setup() {
   pulse = new Pulse(8, 250);
   field = new Field(1.0);
   title = new TextField(
-    createVector(0.05, 0.05),
     "ELECTROMAGNETIC\nEXPERIENCE\nFESTIVAL",
-    40,
+    createVector(0.05, 0.05),
+    0.03,
     LEFT,
-    8
+    0.005
   );
+
   subtitle = new TextField(
-    createVector(0.95, 0.85),
     "MEXICO CITY\nAPRIL 11-14\n2024",
-    40,
+    createVector(0.95, 0.95),
+    0.03,
     RIGHT,
-    8
+    0.005
   );
 }
 
