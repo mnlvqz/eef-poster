@@ -53,7 +53,7 @@ class TextField {
 
         for (let i = 0; i < this.content.length; i++) {
           this.textWidth = textWidth(this.content[i]);
-          fill(255);
+          fill(0);
           noStroke();
           rect(
             this.marginFixed,
@@ -61,7 +61,7 @@ class TextField {
             -this.textWidth - this.marginFixed * 2.0,
             this.textHeight
           );
-          fill(0);
+          fill(255);
           text(this.content[i], 0.0, this.textHeight * i);
         }
         break;

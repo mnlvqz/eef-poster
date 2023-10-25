@@ -102,7 +102,5 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  title.resizeTextField();
-  subtitle.resizeTextField();
   field.setupField();
 }

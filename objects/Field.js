@@ -27,16 +27,16 @@ class Field {
     for (let i = 0; i < this.cols; i++) {
       for (let j = 0; j < this.rows; j++) {
         if (this.motifs[i][j].z < 0.3) {
-          this.drawDot(this.motifs[i][j], 2.5, 255);
+          this.drawDot(this.motifs[i][j], 2.5);
         }
         if (this.motifs[i][j].z >= 0.3 && this.motifs[i][j].z < 0.6) {
-          this.drawCross(this.motifs[i][j], 5.0, 255);
+          this.drawCross(this.motifs[i][j], 5.0);
         }
       }
     }
   }
 
-  drawCross(motif, size, alpha) {
+  drawCross(motif, size) {
     let r = size * 0.5;
     push();
     translate(motif.x, motif.y);
@@ -47,7 +47,7 @@ class Field {
     pop();
   }
 
-  drawDot(motif, size, alpha) {
+  drawDot(motif, size) {
     push();
     translate(motif.x, motif.y);
     noStroke();
