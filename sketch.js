@@ -6,6 +6,8 @@ let field;
 let title, subtitle;
 let landscapes = [];
 
+let variation;
+
 function preload() {
   loadJSON("assets/photos-data.json", (data) => {
     for (let i = 0; i < data.length; i++) {
@@ -50,6 +52,8 @@ function preload() {
       );
     }
   });
+
+  variation = int(floor(random(2)));
 }
 
 function setup() {
@@ -80,7 +84,7 @@ function draw() {
 
   // Updates
 
-  landscapes[0].updateLandscape();
+  landscapes[variation].updateLandscape();
 
   field.updateField();
 
@@ -94,7 +98,7 @@ function draw() {
   field.drawField();
   pulse.drawPulse();
 
-  landscapes[0].drawLandscape();
+  landscapes[variation].drawLandscape();
 
   title.drawTextField();
   subtitle.drawTextField();
