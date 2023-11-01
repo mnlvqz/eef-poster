@@ -96,12 +96,13 @@ function draw() {
   // Draws
 
   field.drawField();
-  pulse.drawPulse();
 
   landscapes[variation].drawLandscape();
 
   title.drawTextField();
   subtitle.drawTextField();
+
+  pulse.drawPulse();
 }
 
 function windowResized() {
