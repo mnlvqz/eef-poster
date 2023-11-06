@@ -5,6 +5,7 @@ let pulse;
 let field;
 let title, subtitle;
 let landscapes = [];
+let gradient;
 
 let variation;
 
@@ -50,6 +51,28 @@ function preload() {
         frontWires,
         128
       );
+
+      let c1 = color(
+        data[i].c1[0],
+        data[i].c1[1],
+        data[i].c1[2],
+        data[i].c1[3]
+      );
+      let c2 = color(
+        data[i].c2[0],
+        data[i].c2[1],
+        data[i].c2[2],
+        data[i].c2[3]
+      );
+
+      print(c2);
+
+      gradient = new Gradient(
+        createVector(0.5, 0.0),
+        createVector(0.5, 1.0),
+        c1,
+        c2
+      );
     }
   });
 
@@ -80,29 +103,26 @@ function setup() {
 }
 
 function draw() {
+  blendMode(BLEND);
   background(0.0);
 
   // Updates
 
   landscapes[variation].updateLandscape();
-
   field.updateField();
-
   pulse.updatePulse();
-
   title.updateTextField();
   subtitle.updateTextField();
+  gradient.updateGradient();
 
   // Draws
 
   field.drawField();
-
   landscapes[variation].drawLandscape();
-
   title.drawTextField();
   subtitle.drawTextField();
-
   pulse.drawPulse();
+  gradient.drawGradient();
 }
 
 function windowResized() {
