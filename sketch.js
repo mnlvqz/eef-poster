@@ -65,8 +65,6 @@ function preload() {
         data[i].c2[3]
       );
 
-      print(c2);
-
       gradient = new Gradient(
         createVector(0.5, 0.0),
         createVector(0.5, 1.0),
