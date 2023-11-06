@@ -1,5 +1,5 @@
 class Gradient {
-  constructor(start, end, colorA, colorB) {
+  constructor(start, end, c1, c2) {
     this.start = start;
     this.end = end;
     this.c1 = c1;
@@ -8,13 +8,13 @@ class Gradient {
 
   updateGradient() {
     this.gradient = drawingContext.createLinearGradient(
-      start.x,
-      start.y,
-      end.x,
-      end.y
+      this.start.x * width,
+      this.start.y * height,
+      this.end.x * width,
+      this.end.y * height
     );
-    this.gradient.addColorStop(0, color(c1.v1, c1.v2, c1.v3, c1.alpha));
-    this.gradient.addColorStop(1, color(c2.v1, c2.v2, c2.v3, c2.alpha));
+    this.gradient.addColorStop(0, this.c1);
+    this.gradient.addColorStop(1, this.c2);
   }
 
   drawGradient() {
