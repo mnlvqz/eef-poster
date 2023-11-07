@@ -74,7 +74,7 @@ function preload() {
     }
   });
 
-  variation = int(floor(random(2)));
+  variation = int(floor(random(3)));
 }
 
 function setup() {
