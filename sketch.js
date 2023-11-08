@@ -5,9 +5,10 @@ let pulse;
 let field;
 let title, subtitle;
 let landscapes = [];
-let gradient;
+let gradient = [];
 
-let variation;
+let landscapeType;
+let gradientType;
 
 function preload() {
   loadJSON("assets/photos-data.json", (data) => {
@@ -65,16 +66,17 @@ function preload() {
         data[i].c2[3]
       );
 
-      gradient = new Gradient(
+      gradient[i] = new Gradient(
         createVector(0.5, 0.0),
         createVector(0.5, 1.0),
-        c1,
-        c2
+        c2,
+        c1
       );
     }
   });
 
-  variation = int(floor(random(3)));
+  landscapeType = int(floor(random(3)));
+  gradientType = int(floor(random(3)));
 }
 
 function setup() {
@@ -106,21 +108,21 @@ function draw() {
 
   // Updates
 
-  landscapes[variation].updateLandscape();
+  landscapes[landscapeType].updateLandscape();
   field.updateField();
   pulse.updatePulse();
   title.updateTextField();
   subtitle.updateTextField();
-  gradient.updateGradient();
+  gradient[gradientType].updateGradient();
 
   // Draws
 
   field.drawField();
-  landscapes[variation].drawLandscape();
+  landscapes[landscapeType].drawLandscape();
   title.drawTextField();
   subtitle.drawTextField();
   pulse.drawPulse();
-  gradient.drawGradient();
+  gradient[gradientType].drawGradient();
 }
 
 function windowResized() {
