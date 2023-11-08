@@ -83,7 +83,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   imageMode(CENTER);
-  pulse = new Pulse(8, 250);
+  pulse = new Pulse(8, 500);
   field = new Field(1.0);
   title = new TextField(
     "ELECTROMAGNETIC\nEXPERIENCE\nFESTIVAL",
