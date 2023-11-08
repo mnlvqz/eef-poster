@@ -26,7 +26,7 @@ class Pulse {
     push();
     translate(this.coordinate);
     noFill();
-    strokeWeight(1);
+    strokeWeight(1.5);
     for (let c of this.circles) {
       let d = this.diameterRatio * exp(c);
       stroke(255, 255, 255, 255 - c * 255);
