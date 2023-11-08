@@ -35,7 +35,7 @@ class Wire {
     rotate(this.angle);
     noFill();
     stroke(255);
-    strokeWeight(1);
+    strokeWeight(2);
     beginShape();
     for (let v of this.vertices) {
       curveVertex(v.x * maxRatio, v.y * maxRatio);
