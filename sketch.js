@@ -1,6 +1,7 @@
 const CELL_WIDTH = 25;
 const PALETTE = ["#000000", "#FFFFFF"];
 
+let sound;
 let pulse;
 let field;
 let title, subtitle;
@@ -9,8 +10,15 @@ let gradient = [];
 
 let landscapeType;
 let gradientType;
+let soundFlag;
 
 function preload() {
+  soundFormats("wav");
+
+  loadSound("assets/sounds/sound-" + int(random(1, 23)) + ".wav", (sample) => {
+    sound = new Sound(sample);
+  });
+
   loadJSON("assets/photos-data.json", (data) => {
     for (let i = 0; i < data.length; i++) {
       let backWires = [];
@@ -50,7 +58,8 @@ function preload() {
         createVector(0.0, 0.0),
         backWires,
         frontWires,
-        128
+        128,
+        sound
       );
 
       let c1 = color(
@@ -70,7 +79,8 @@ function preload() {
         createVector(0.5, 0.0),
         createVector(0.5, 1.0),
         c2,
-        c1
+        c1,
+        sound
       );
     }
   });
@@ -80,6 +90,7 @@ function preload() {
 }
 
 function setup() {
+  getAudioContext().suspend();
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   imageMode(CENTER);
@@ -100,6 +111,9 @@ function setup() {
     RIGHT,
     0.005
   );
+
+  sound.setupEMF();
+  soundFlag = true;
 }
 
 function draw() {
@@ -128,4 +142,15 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   field.setupField();
+}
+
+function mousePressed() {
+  getAudioContext().resume();
+  if (soundFlag) {
+    sound.sample.setVolume(1.0, 2, 0.5);
+    soundFlag = !soundFlag;
+  } else {
+    sound.sample.setVolume(0.0, 2, 0.5);
+    soundFlag = !soundFlag;
+  }
 }
