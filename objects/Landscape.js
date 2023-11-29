@@ -5,7 +5,8 @@ class Landscape {
     offsetH,
     backWiresCoordinates,
     frontWiresCoordinates,
-    wireSegments
+    wireSegments,
+    sound
   ) {
     this.photo = photo;
     this.offsetW = offsetW;
@@ -15,6 +16,7 @@ class Landscape {
     this.wireSegments = wireSegments;
     this.backWires = [];
     this.frontWires = [];
+    this.sound = sound;
 
     for (let i = 0; i < this.backWiresCoordinates.length; i++) {
       this.backWires[i] = new Wire(
@@ -27,7 +29,8 @@ class Landscape {
           this.backWiresCoordinates[i][1].y
         ),
         128,
-        50
+        50,
+        sound
       );
     }
 
@@ -42,7 +45,8 @@ class Landscape {
           this.frontWiresCoordinates[i][1].y
         ),
         128,
-        50
+        50,
+        sound
       );
     }
   }
