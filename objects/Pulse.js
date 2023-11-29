@@ -1,7 +1,11 @@
 class Pulse {
-  constructor(nCircles, diameterRatio) {
+  constructor(nCircles, diameterRatio, sound) {
     this.nCircles = nCircles;
     this.diameterRatio = diameterRatio;
+    this.sound = sound;
+    this.alpha = 0.0;
+    this.pulseFlag = false;
+    this.soundLevel = 0.0;
     this.circles = [];
     this.setupPulse();
   }
@@ -14,6 +18,12 @@ class Pulse {
   }
 
   updatePulse() {
+    if (this.pulseFlag) {
+      this.alpha = constrain(lerp(this.alpha, 1.0, 0.01), 0.0, 1.0);
+    } else {
+      this.alpha = constrain(lerp(this.alpha, 0.0, 0.01), 0.0, 1.0);
+    }
+
     for (let i = 0; i < this.circles.length; i++) {
       this.circles[i] += 0.05;
     }
@@ -29,7 +39,8 @@ class Pulse {
     strokeWeight(1.5);
     for (let c of this.circles) {
       let d = this.diameterRatio * exp(c);
-      stroke(255, 255, 255, 255 - c * 255);
+      stroke(255, 255, 255, this.alpha * (255 - c * 255));
+
       ellipse(0, 0, d, d);
     }
     pop();
