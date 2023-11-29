@@ -155,3 +155,18 @@ function mousePressed() {
     soundFlag = false;
   }
 }
+
+function touchStarted() {
+  getAudioContext().resume();
+  if (!soundFlag) {
+    sound.sample.setVolume(1.0, 2, 0.5);
+    gradient[gradientType].gradientFlag = true;
+    pulse.pulseFlag = true;
+    soundFlag = true;
+  } else {
+    sound.sample.setVolume(0.0, 2, 0.5);
+    gradient[gradientType].gradientFlag = false;
+    pulse.pulseFlag = false;
+    soundFlag = false;
+  }
+}
