@@ -17,6 +17,7 @@ function preload() {
 
   loadSound("assets/sounds/sound-" + int(random(1, 23)) + ".wav", (sample) => {
     sound = new Sound(sample);
+    pulse = new Pulse(8, 500, sound);
     loadJSON("assets/photos-data.json", (data) => {
       for (let i = 0; i < data.length; i++) {
         let backWires = [];
@@ -93,7 +94,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   imageMode(CENTER);
-  pulse = new Pulse(8, 500);
   field = new Field(1.0);
   title = new TextField(
     "ELECTROMAGNETIC\nEXPERIENCE\nFESTIVAL",
@@ -111,7 +111,7 @@ function setup() {
     0.005
   );
 
-  soundFlag = true;
+  soundFlag = false;
 }
 
 function draw() {
@@ -119,7 +119,7 @@ function draw() {
   background(0.0);
 
   // Updates
-
+  sound.updateSound();
   landscapes[landscapeType].updateLandscape();
   field.updateField();
   pulse.updatePulse();
@@ -128,7 +128,6 @@ function draw() {
   gradient[gradientType].updateGradient();
 
   // Draws
-
   field.drawField();
   landscapes[landscapeType].drawLandscape();
   title.drawTextField();
@@ -144,11 +143,15 @@ function windowResized() {
 
 function mousePressed() {
   getAudioContext().resume();
-  if (soundFlag) {
+  if (!soundFlag) {
     sound.sample.setVolume(1.0, 2, 0.5);
-    soundFlag = !soundFlag;
+    gradient[gradientType].gradientFlag = true;
+    pulse.pulseFlag = true;
+    soundFlag = true;
   } else {
     sound.sample.setVolume(0.0, 2, 0.5);
-    soundFlag = !soundFlag;
+    gradient[gradientType].gradientFlag = false;
+    pulse.pulseFlag = false;
+    soundFlag = false;
   }
 }
