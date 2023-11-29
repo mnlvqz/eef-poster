@@ -17,72 +17,71 @@ function preload() {
 
   loadSound("assets/sounds/sound-" + int(random(1, 23)) + ".wav", (sample) => {
     sound = new Sound(sample);
-  });
+    loadJSON("assets/photos-data.json", (data) => {
+      for (let i = 0; i < data.length; i++) {
+        let backWires = [];
+        let frontWires = [];
 
-  loadJSON("assets/photos-data.json", (data) => {
-    for (let i = 0; i < data.length; i++) {
-      let backWires = [];
-      let frontWires = [];
+        for (let j = 0; j < data[i].back.length; j++) {
+          backWires[j] = [];
 
-      for (let j = 0; j < data[i].back.length; j++) {
-        backWires[j] = [];
+          backWires[j][0] = createVector(
+            data[i].back[j].start[0],
+            data[i].back[j].start[1]
+          );
 
-        backWires[j][0] = createVector(
-          data[i].back[j].start[0],
-          data[i].back[j].start[1]
+          backWires[j][1] = createVector(
+            data[i].back[j].end[0],
+            data[i].back[j].end[1]
+          );
+        }
+
+        for (let j = 0; j < data[i].front.length; j++) {
+          frontWires[j] = [];
+
+          frontWires[j][0] = createVector(
+            data[i].front[j].start[0],
+            data[i].front[j].start[1]
+          );
+
+          frontWires[j][1] = createVector(
+            data[i].front[j].end[0],
+            data[i].front[j].end[1]
+          );
+        }
+
+        landscapes[i] = new Landscape(
+          loadImage(data[i].path),
+          createVector(0.0, 0.0),
+          createVector(0.0, 0.0),
+          backWires,
+          frontWires,
+          128,
+          sound
         );
 
-        backWires[j][1] = createVector(
-          data[i].back[j].end[0],
-          data[i].back[j].end[1]
+        let c1 = color(
+          data[i].c1[0],
+          data[i].c1[1],
+          data[i].c1[2],
+          data[i].c1[3]
+        );
+        let c2 = color(
+          data[i].c2[0],
+          data[i].c2[1],
+          data[i].c2[2],
+          data[i].c2[3]
+        );
+
+        gradient[i] = new Gradient(
+          createVector(0.5, 0.0),
+          createVector(0.5, 1.0),
+          c2,
+          c1,
+          sound
         );
       }
-
-      for (let j = 0; j < data[i].front.length; j++) {
-        frontWires[j] = [];
-
-        frontWires[j][0] = createVector(
-          data[i].front[j].start[0],
-          data[i].front[j].start[1]
-        );
-
-        frontWires[j][1] = createVector(
-          data[i].front[j].end[0],
-          data[i].front[j].end[1]
-        );
-      }
-
-      landscapes[i] = new Landscape(
-        loadImage(data[i].path),
-        createVector(0.0, 0.0),
-        createVector(0.0, 0.0),
-        backWires,
-        frontWires,
-        128,
-        sound
-      );
-
-      let c1 = color(
-        data[i].c1[0],
-        data[i].c1[1],
-        data[i].c1[2],
-        data[i].c1[3]
-      );
-      let c2 = color(
-        data[i].c2[0],
-        data[i].c2[1],
-        data[i].c2[2],
-        data[i].c2[3]
-      );
-
-      gradient[i] = new Gradient(
-        createVector(0.5, 0.0),
-        createVector(0.5, 1.0),
-        c2,
-        c1,
-        sound
-      );
-    }
+    });
   });
 
   landscapeType = int(floor(random(3)));
@@ -112,7 +111,6 @@ function setup() {
     0.005
   );
 
-  sound.setupEMF();
   soundFlag = true;
 }
 
