@@ -17,7 +17,7 @@ class Wire {
 
   updateWire() {
     for (let i = 0; i < this.segments; i++) {
-      let soundHistogram = map(this.sound.histogram[i], 0.0, 1.0, -1.0, 1.0);
+      let soundHistogram = map(this.sound.histogram[i], 0.0, 1.0, -0.0, 1.0);
       let tension = map(i, 0, this.segments - 1, -HALF_PI, HALF_PI);
       /*
       this.vertices[i].y =
