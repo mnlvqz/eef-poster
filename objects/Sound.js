@@ -1,6 +1,7 @@
 class Sound {
   constructor(sample) {
     this.sample = sample;
+    this.histogram = Array.from({ length: 128 }, () => 0);
     this.amplitude = new p5.Amplitude();
     this.delay = new p5.Delay();
     this.filter = new p5.Filter();
@@ -20,5 +21,10 @@ class Sound {
 
     this.amplitude.setInput(this.delay);
     this.amplitude.toggleNormalize(true);
+  }
+
+  updateSound() {
+    this.histogram.shift();
+    this.histogram.push(this.amplitude.getLevel());
   }
 }
