@@ -15,7 +15,7 @@ class Sound {
     this.delay.drywet(0.5);
     this.delay.amp(0.6);
 
-    this.reverb.process(this.delay, 5, 2);
+    this.reverb.process(this.delay, 8, 2);
     this.reverb.drywet(1.0);
     this.reverb.amp(0.8);
 
