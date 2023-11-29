@@ -29,7 +29,7 @@ class Landscape {
           this.backWiresCoordinates[i][1].y
         ),
         128,
-        100,
+        200,
         sound
       );
     }
@@ -45,7 +45,7 @@ class Landscape {
           this.frontWiresCoordinates[i][1].y
         ),
         128,
-        200,
+        300,
         sound
       );
     }
