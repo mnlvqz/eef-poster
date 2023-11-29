@@ -16,15 +16,15 @@ class Wire {
   }
 
   updateWire() {
-    let soundLevel;
     for (let i = 0; i < this.segments; i++) {
-      soundLevel = map(this.sound.amplitude.getLevel(), 0.0, 1.0, -1.0, 1.0);
+      let soundHistogram = map(this.sound.histogram[i], 0.0, 1.0, -1.0, 1.0);
       let tension = map(i, 0, this.segments - 1, -HALF_PI, HALF_PI);
       /*
       this.vertices[i].y =
         sin(this.ctn) * pow(cos(tension), 2) * this.amplitude;
         */
-      this.vertices[i].y = soundLevel * pow(cos(tension), 2) * this.amplitude;
+      this.vertices[i].y =
+        soundHistogram * pow(cos(tension), 2) * this.amplitude;
       this.ctn += 0.2;
     }
   }
